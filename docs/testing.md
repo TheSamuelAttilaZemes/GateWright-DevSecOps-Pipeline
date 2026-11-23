@@ -29,7 +29,7 @@ The same rule is enforced in three places:
 3. **`coverage report`** on your machine (the settings live in `pyproject.toml`).
 
 Linux is the reference platform. Windows and macOS take other OS branches, so coverage is measured
-there but doesn't enforce it.
+there but not enforced.
 
 The 100% holds with or without Docker, WeasyPrint, a colour terminal, a venv or root rights: code that
 depends on the machine is tested with fakes too (a fake `docker` program, a fake `weasyprint` module,
