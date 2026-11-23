@@ -6,6 +6,11 @@ config or behaviour).
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-11-23
+
+### Added
+- On PyPI: `pipx install "gatewright-pipeline[tools]"`.
+
 ### License
 - PolyForm Noncommercial License 1.0.0: free for noncommercial use, companies need permission (COMMERCIAL.md).
 
