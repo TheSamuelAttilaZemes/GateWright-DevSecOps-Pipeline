@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+.gatewright/coverage/
+htmlcov/
+# gatewright
+.gatewright/runs/
+.gatewright/cache/
+.gatewright/gatewright.db
+.gatewright/secrets.env
+.gatewright/workspaces/
+.gatewright/deployments/
+# notes for AI assistants stay local
+CLAUDE.md
+CLAUDE.local.md
+.claude/

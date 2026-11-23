@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gatewright-pipeline"
+version = "0.7.1"
+description = "Gatewright Pipeline: a self-hosted, hardware-aware DevSecOps pipeline with gates, human-readable errors, reports and a terminal UI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "PolyForm-Noncommercial-1.0.0"
+license-files = ["LICENSE.md", "NOTICE"]
+authors = [{name = "Samuel Attila Zemes"}]
+dependencies = [
+  "pyyaml>=6",
+  "jinja2>=3",
+  "psutil>=5.9",
+  "rich>=13",
+  "textual>=0.60",
+  "markdown>=3.4",
+]
+
+[project.urls]
+Repository = "https://github.com/TheSamuelAttilaZemes/GateWright-DevSecOps-Pipeline"
+
+[project.optional-dependencies]
+pdf = ["weasyprint>=60"]
+dev = ["pytest>=7", "coverage>=7.4", "ruff", "bandit", "jsonschema"]
+tools = ["ruff", "bandit", "pytest", "coverage", "pip-audit"]   # scanners used by the starter pipelines
+
+[project.scripts]
+gatewright = "gatewright.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gatewright*"]
+
+[tool.setuptools.package-data]
+gatewright = ["templates/*", "tui.tcss"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+# Gatewright's own tests must cover 100% of its lines AND branches (see docs/testing.md).
+# `# pragma: no cover` is allowed only for code that cannot run on the test OS; each one
+# carries a reason and is listed in docs/testing.md.
+[tool.coverage.run]
+branch = true
+source = ["gatewright"]
+parallel = true
+concurrency = ["thread"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+skip_covered = true
+exclude_also = [
+  'if __name__ == "__main__":',
+]

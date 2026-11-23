@@ -1,0 +1,4 @@
+# Shell scripts must keep LF line endings, also when checked out on Windows,
+# otherwise `sh install.sh` fails with "$'\r': command not found".
+*.sh text eol=lf
+tests/fixtures/os-release/* text eol=lf

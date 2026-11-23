@@ -1,0 +1,4 @@
+NAME="BlackArch"
+PRETTY_NAME="BlackArch Linux"
+ID=blackarch
+ID_LIKE=arch

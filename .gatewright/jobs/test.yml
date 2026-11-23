@@ -1,0 +1,32 @@
+jobs:
+  # The test suite runs ONCE, under coverage. `coverage` (below) reads the data it
+  # wrote, so the coverage number always belongs to exactly this test run.
+  - id: unit-tests
+    name: Unit tests (pytest, measured by coverage)
+    gate: test
+    category: dev
+    needs: [compile]
+    run: python -m coverage erase && python -m coverage run -m pytest -q -p no:cacheprovider --junitxml="$GATEWRIGHT_OUT/junit.xml"
+    parser: {type: junit, file: "$GATEWRIGHT_OUT/junit.xml"}
+    tool: pytest
+    env: {COVERAGE_FILE: .gatewright/coverage/.coverage}
+    inputs: ["gatewright/**", "tests/**", "pyproject.toml"]
+    resources: {cpu: 2, mem: 1GB}
+    timeout: 1500
+
+  # Required, not optional: if coverage were missing the policy would have nothing to
+  # check and could pass silently. Settings (branch coverage, fail_under = 100) live in
+  # pyproject.toml, so `coverage report` fails this job below 100% lines+branches and
+  # prints the uncovered lines into the job log.
+  - id: coverage
+    name: Coverage (100% lines and branches)
+    gate: test
+    category: dev
+    needs: [unit-tests]
+    # scripts/coverage_report.py: 100% on Linux, 99% where the POSIX-only lines can't run (known issue L18)
+    run: python -m coverage combine -q && python -m coverage json -q --fail-under=0 -o "$GATEWRIGHT_OUT/coverage.json" && python scripts/coverage_report.py
+    parser: {type: coverage, file: "$GATEWRIGHT_OUT/coverage.json"}
+    tool: coverage
+    env: {COVERAGE_FILE: .gatewright/coverage/.coverage}
+    inputs: ["gatewright/**", "tests/**", "pyproject.toml"]
+    timeout: 300

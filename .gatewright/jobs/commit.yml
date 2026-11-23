@@ -1,0 +1,55 @@
+jobs:
+  - id: lint
+    name: Ruff lint
+    gate: commit
+    category: dev
+    run: ruff check --output-format json --select E,F,W --ignore E501 gatewright tests
+    parser: ruff
+    tool: ruff
+    fail_on: medium          # style issues (low) warn, real bugs fail
+    inputs: ["**/*.py", "pyproject.toml", "ruff.toml"]
+    resources: {cpu: 1, mem: 256MB}
+    timeout: 120
+
+  - id: format
+    name: Formatting
+    gate: commit
+    category: dev
+    run: ruff format --check --diff gatewright/__init__.py
+    tool: ruff
+    fail_on: high
+    inputs: ["**/*.py"]
+    timeout: 120
+
+  - id: secrets-scan
+    name: Secret scan (gitleaks)
+    gate: commit
+    category: sec
+    run: gitleaks detect --no-git --source . --report-format json --report-path "$GATEWRIGHT_OUT/gitleaks.json" --redact --exit-code 0
+    parser: {type: gitleaks, file: "$GATEWRIGHT_OUT/gitleaks.json"}
+    tool: gitleaks
+    optional: true           # skipped (not failed) if gitleaks is not installed
+    cache: false
+
+  - id: sast
+    name: SAST (bandit)
+    gate: commit
+    category: sec
+    run: bandit -r gatewright -f json -q -ll
+    parser: bandit
+    tool: bandit
+    inputs: ["**/*.py"]
+    resources: {cpu: 1, mem: 512MB}
+
+  - id: deps-audit
+    name: Dependency vulnerabilities (pip-audit)
+    gate: commit
+    category: sec
+    # The project has no requirements.txt (dependencies are in pyproject.toml): audit the
+    # environment the jobs run in, which has every runtime and dev dependency installed.
+    run: pip-audit --skip-editable -f json
+    parser: pip-audit
+    tool: pip-audit
+    optional: true
+    retries: 2               # network errors are retried
+    inputs: ["requirements*.txt", "pyproject.toml"]

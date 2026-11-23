@@ -1,0 +1,4 @@
+NAME="SomeNewDistro"
+ID=somenewdistro
+ID_LIKE="ubuntu debian"
+PRETTY_NAME="SomeNewDistro 1.0"

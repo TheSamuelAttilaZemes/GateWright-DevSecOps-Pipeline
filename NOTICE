@@ -1,0 +1,9 @@
+Required Notice: Copyright (C) 2026 Samuel Attila Zemes (https://github.com/TheSamuelAttilaZemes/GateWright-DevSecOps-Pipeline)
+
+Gatewright Pipeline is licensed under the PolyForm Noncommercial License 1.0.0. The text is in the file LICENSE.md.
+
+Additional permission from the copyright holder:
+What Gatewright writes for you is yours. The pipeline and job files that `gatewright init` creates from its templates,
+the git hook that it installs, and the reports, manifests, logs, release notes and other results of its runs may be
+kept, used, changed and passed on under terms of your choice, also where they contain parts of Gatewright's templates.
+This permission covers those files only. Using Gatewright itself is covered by the license.

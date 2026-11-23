@@ -1,0 +1,4 @@
+PRETTY_NAME="Parrot Security 6.2 (lorikeet)"
+ID=parrot
+ID_LIKE=debian
+VERSION_ID="6.2"

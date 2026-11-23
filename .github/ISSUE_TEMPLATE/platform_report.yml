@@ -1,0 +1,24 @@
+name: Platform test report
+description: "I ran Gatewright on <OS/distro>: here's what happened (works-fine reports welcome!)"
+labels: [platform-report]
+body:
+  - type: input
+    id: platform
+    attributes:
+      label: OS / distribution / version / CPU architecture
+      placeholder: "Fedora 41 x86_64, Windows 11 + Git Bash, macOS 15 arm64, ..."
+    validations:
+      required: true
+  - type: dropdown
+    id: result
+    attributes:
+      label: Overall result
+      options: [Everything worked, Worked with workarounds, Did not work]
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What you ran and what happened
+      description: e.g. install.sh output, pytest summary line, gatewright doctor, gatewright run, gatewright tui
+      render: text

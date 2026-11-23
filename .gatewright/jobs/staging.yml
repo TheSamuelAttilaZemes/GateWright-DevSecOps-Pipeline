@@ -1,0 +1,7 @@
+jobs:
+  - id: smoke
+    name: Smoke test (replace with your deploy + health check)
+    gate: staging
+    category: ops
+    run: python -c "print('deploy to staging, then e.g. curl -f https://staging.example/health')"
+    cache: false

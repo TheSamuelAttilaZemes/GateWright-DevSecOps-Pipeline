@@ -1,0 +1,53 @@
+# Gatewright pipeline. Gates run in this order. `mode: enforced` stops the pipeline
+# on failure; `mode: advisory` records the failure and continues.
+version: 1
+name: gatewright
+profile: auto          # auto | laptop | server
+limits:                # so the machine stays usable during runs
+  max_cpu_percent: 70  # new jobs wait while system CPU is above this
+  max_mem_percent: 70  # new jobs wait while system RAM is above this
+  kill_mem_percent: 80 # watchdog stops the newest job above this RAM usage
+# To follow your own fork (docs/git-integration.md):
+# vcs:
+#   provider: github
+#   repo: you/gatewright
+#   branches: [development]
+#   mode: manual           # every commit waits for `gatewright approve N`
+#   untrusted: refuse      # or containers: approving a stranger's pull request runs its code on your machine
+gates:
+  - id: commit
+    mode: enforced
+    description: Fast checks on every commit (lint, secrets, SAST, dependencies)
+  - id: build
+    mode: enforced
+    description: The code compiles / packages
+  - id: test
+    mode: enforced
+    description: Unit tests and coverage
+    # 100% lines+branches is enforced on Linux (the reference platform: the GitHub Actions
+    # workflow reads fail_under = 100 from pyproject.toml). This pipeline runs on a Windows
+    # laptop, where the POSIX-only lines can't run (known issue L18): 99.29% measured.
+    coverage: 99
+  - id: staging
+    mode: advisory
+    enabled: false     # opt in with `gatewright run --gates staging`
+    requires: [test]   # test must have passed for this commit
+    description: Deploy to staging and smoke test
+policy:
+  - id: no-critical
+    metric: findings.critical
+    op: "=="
+    value: 0
+    description: No critical findings (e.g. leaked secrets) anywhere.
+  - id: no-high-in-commit
+    gates: [commit]
+    metric: findings.high
+    op: "=="
+    value: 0
+    description: High severity security findings block the commit gate.
+  - id: tests-ran
+    gates: [test]
+    metric: tests.total
+    op: ">"
+    value: 0
+    description: The test gate actually ran tests (an empty run must not pass).

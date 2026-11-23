@@ -1,0 +1,7 @@
+jobs:
+  - id: compile
+    name: Byte-compile all modules
+    gate: build
+    category: dev
+    run: python -m compileall -q -x "(\.venv|\.gatewright|\.git)" .
+    inputs: ["**/*.py"]
