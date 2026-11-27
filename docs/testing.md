@@ -130,7 +130,7 @@ line of coverage fails the `test` gate and prints the missing lines in the `cove
 
 ## CI
 
-`.github/workflows/tests.yml` runs the suite on Linux (Python 3.10, 3.12 with the 100% rule, 3.13) and Windows, for every
+`.github/workflows/tests.yml` runs the suite on Linux (Python 3.10, 3.12 with the 100% rule, 3.13, 3.14, 3.15) and Windows, for every
 pull request and for `main` and `development`. GitHub's own runners are free for public repositories. If you don't use
 GitHub, delete the folder and run the same commands from any CI, or from Gatewright itself.
 

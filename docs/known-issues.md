@@ -1,6 +1,6 @@
 # Known issues and limitations
 
-An honest map of what is untested, limited or rough in **Gatewright Pipeline 0.7** (0.7.1).
+An honest map of what is untested, limited or rough in **Gatewright Pipeline 0.7** (0.7.2).
 Windows has its own detailed list: [windows.md](windows.md#known-issues) (W1–W22).
 Found something else? Open an issue with the bug or platform-report template.
 

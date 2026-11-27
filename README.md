@@ -110,6 +110,7 @@ The complete guide is [docs/operating.md](docs/operating.md). In short:
 ```bash
 git clone https://github.com/TheSamuelAttilaZemes/GateWright-DevSecOps-Pipeline.git gatewright && cd gatewright
 sh install.sh                                                  # Linux, macOS
+# or from PyPI, on any system: pipx install "gatewright-pipeline[tools]"
 powershell -ExecutionPolicy Bypass -File install.ps1           # Windows (Python 3.10+, Git for Windows)
 gatewright doctor                                              # what is missing, and how to install it here
 ```
