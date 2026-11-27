@@ -10,6 +10,11 @@ config or behaviour).
 
 ### Added
 - On PyPI: `pipx install "gatewright-pipeline[tools]"`.
+- Tested on Python 3.14 and 3.15 (CI on Linux). PyPI lists the supported Python versions.
+
+### Deprecated
+- Python 3.10 reached its end of life in October 2026. Gatewright 0.7.2 is the last version that supports it; 0.7.3 needs
+  Python 3.11 or newer.
 
 ### License
 - PolyForm Noncommercial License 1.0.0: free for noncommercial use, companies need permission (COMMERCIAL.md).
